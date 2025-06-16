@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Academy - 네트워크관리사 2급</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0a0f1c, #1a2332);
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(0, 20, 40, 0.8);
+            padding: 1rem 0;
+            border-bottom: 2px solid #00ff88;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00ff88;
+        }
+
+        .logo::before {
+            content: "🌐";
+            margin-right: 0.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #00ff88, #00cc70);
+            color: #0a0f1c;
+            border: none;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4);
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #00ff88, #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+
+        .study-sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .study-card {
+            background: rgba(0, 30, 50, 0.6);
+            border: 1px solid #00ff88;
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .study-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #00ff88, #00ccff);
+        }
+
+        .study-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.2);
+            border-color: #00ccff;
+        }
+
+        .card-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #00ff88, #00cc70);
+            color: #0a0f1c;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            color: #00ff88;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-description {
+            opacity: 0.8;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-btn {
+            background: linear-gradient(135deg, #1a2332, #2a3442);
+            color: #00ff88;
+            border: 1px solid #00ff88;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .card-btn:hover {
+            background: linear-gradient(135deg, #00ff88, #00cc70);
+            color: #0a0f1c;
+            transform: scale(1.05);
+        }
+
+        .quiz-container {
+            display: none;
+            background: rgba(0, 30, 50, 0.8);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 1px solid #00ff88;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-title {
+            font-size: 1.5rem;
+            color: #00ff88;
+        }
+
+        .quiz-progress {
+            background: rgba(255, 255, 255, 0.1);
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+            flex: 1;
+            margin: 0 1rem;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff88, #00ccff);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .question-container {
+            margin-bottom: 2rem;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .options {
+            display: grid;
+            gap: 0.8rem;
+        }
+
+        .option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .option:hover {
+            background: rgba(0, 255, 136, 0.1);
+            border-color: #00ff88;
+        }
+
+        .option.selected {
+            background: rgba(0, 255, 136, 0.2);
+            border-color: #00ff88;
+        }
+
+        .option.correct {
+            background: rgba(0, 255, 136, 0.3);
+            border-color: #00ff88;
+        }
+
+        .option.incorrect {
+            background: rgba(255, 0, 0, 0.3);
+            border-color: #ff4444;
+        }
+
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        .quiz-btn {
+            background: linear-gradient(135deg, #00ff88, #00cc70);
+            color: #0a0f1c;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4);
+        }
+
+        .quiz-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .score-display {
+            font-size: 1.1rem;
+            color: #00ff88;
+            font-weight: bold;
+        }
+
+        .results-container {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .results-title {
+            font-size: 2rem;
+            color: #00ff88;
+            margin-bottom: 1rem;
+        }
+
+        .results-score {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .results-message {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .study-sections {
+                grid-template-columns: 1fr;
+            }
+
+            .quiz-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .quiz-progress {
+                margin: 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">Network Academy</div>
+            <nav class="nav-menu">
+                <a href="#" class="nav-btn" onclick="showSection('home')">홈</a>
+                <a href="#" class="nav-btn" onclick="showSection('quiz')">문제풀기</a>
+                <a href="#" class="nav-btn" onclick="showSection('results')">결과확인</a>
+                <a href="https://www.comcbt.com"
+   class="nav-btn"
+   style="color: #00faff !important;
+          background-color: #000 !important;
+          border: 2px solid #00faff !important;
+          box-shadow: 0 0 10px #00faff, 0 0 20px #00faff, 0 0 30px #00faff !important;
+          text-shadow: 0 0 5px #00faff !important;
+          font-weight: bold !important;
+          padding: 10px 15px;
+          text-decoration: none;
+          display: inline-block;">
+    CBT 풀기
+</a>
+                <a href="https://linktr.ee/hslcrb"
+   class="nav-btn"
+   style="color: #fff700 !important;
+          background-color: #000 !important;
+          border: 2px solid #fff700 !important;
+          box-shadow: 0 0 10px #fff700, 0 0 20px #fff700, 0 0 30px #fff700 !important;
+          text-shadow: 0 0 5px #fff700 !important;
+          font-weight: bold !important;
+          padding: 10px 15px;
+          text-decoration: none;
+          display: inline-block;">
+    사이트맵
+</a>
+
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div id="home-section">
+            <div class="hero-section">
+                <h1 class="hero-title">네트워크관리사 2급</h1>
+                <p class="hero-subtitle">네트워크 통신의 핵심인 OSI 7계층 모델을 완벽하게 이해해보세요</p>
+            </div>
+
+            <div class="study-sections">
+                <div class="study-card">
+                    <div class="card-number">1</div>
+                    <h3 class="card-title">TCP/IP</h3>
+                    <p class="card-description">인터넷 프로토콜의 핵심인 TCP/IP에 대해 학습하고 실습해보세요</p>
+                    <button class="card-btn" onclick="startQuiz('tcpip')">학습 시작</button>
+                </div>
+
+                <div class="study-card">
+                    <div class="card-number">2</div>
+                    <h3 class="card-title">네트워크 일반</h3>
+                    <p class="card-description">네트워크의 기본 개념과 구조에 대해 체계적으로 학습합니다</p>
+                    <button class="card-btn" onclick="startQuiz('network')">학습 시작</button>
+                </div>
+
+                <div class="study-card">
+                    <div class="card-number">3</div>
+                    <h3 class="card-title">NOS (Network Operating System)</h3>
+                    <p class="card-description">네트워크 운영체제의 개념과 관리 방법을 학습합니다</p>
+                    <button class="card-btn" onclick="startQuiz('nos')">학습 시작</button>
+                </div>
+
+                <div class="study-card">
+                    <div class="card-number">4</div>
+                    <h3 class="card-title">네트워크 운용기기</h3>
+                    <p class="card-description">라우터, 스위치 등 네트워크 장비의 동작원리를 이해합니다</p>
+                    <button class="card-btn" onclick="startQuiz('equipment')">학습 시작</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="quiz-section" class="quiz-container">
+            <div class="quiz-header">
+                <h2 class="quiz-title">문제 풀이</h2>
+                <div class="quiz-progress">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <div class="score-display" id="scoreDisplay">점수: 0/0</div>
+            </div>
+
+            <div class="question-container" id="questionContainer">
+                <!-- 문제가 여기에 동적으로 로드됩니다 -->
+            </div>
+
+            <div class="quiz-controls">
+                <button class="quiz-btn" id="prevBtn" onclick="previousQuestion()" disabled>이전</button>
+                <button class="quiz-btn" id="nextBtn" onclick="nextQuestion()">다음</button>
+                <button class="quiz-btn" id="submitBtn" onclick="submitQuiz()" style="display: none;">결과 확인</button>
+            </div>
+        </div>
+
+        <div id="results-section" class="results-container">
+            <h2 class="results-title">시험 결과</h2>
+            <div class="results-score" id="finalScore">0%</div>
+            <p class="results-message" id="resultMessage">수고하셨습니다!</p>
+            <button class="quiz-btn" onclick="restartQuiz()">다시 시작</button>
+        </div>
+    </main>
+
+    <script>
+        // 실제 PDF 기출문제 데이터
+        const questions = {
+            tcpip: [
+                {
+                    question: "DNS에서 사용될 때 TTL(Time to Live)의 설명으로 올바른 것은?",
+                    options: [
+                        "데이터가 DNS서버 존으로부터 나오기 전에 현재 남은 시간이다.",
+                        "데이터가 DNS서버 캐시로부터 나오기 전에 현재 남은 시간이다.",
+                        "패킷이 DNS서버 존으로부터 나오기 전에 현재 남은 시간이다.",
+                        "패킷이 DNS서버 네임서버 레코드로부터 나오기 전에 현재 남은 시간이다."
+                    ],
+                    answer: 1
+                },
+                {
+                    question: "IPv4 Class 중에서 멀티캐스트 용도로 사용되는 것은?",
+                    options: ["B Class", "C Class", "D Class", "E Class"],
+                    answer: 2
+                },
+                {
+                    question: "'255.255.255.224'인 서브넷에 최대 할당 가능한 호스트 수는?",
+                    options: ["2개", "6개", "14개", "30개"],
+                    answer: 3
+                },
+                {
+                    question: "Link State 알고리즘을 이용해 서로에게 자신의 현재 상태를 알려주며 네트워크 내 통신을 위해 사용하는 프로토콜은?",
+                    options: ["OSPF", "IDRP", "EGP", "BGP"],
+                    answer: 0
+                },
+                {
+                    question: "IP 헤더에 포함이 되지 않는 필드는?",
+                    options: ["ACK", "Version", "Header checksum", "Header length"],
+                    answer: 0
+                }
+            ],
+            network: [
+                {
+                    question: "LAN의 구성형태 중 중앙의 제어점으로부터 모든 기기가 점대 점(Point to Point) 방식으로 연결된 구성형태는?",
+                    options: ["링형 구성", "스타형 구성", "버스형 구성", "트리형 구성"],
+                    answer: 1
+                },
+                {
+                    question: "전기신호는 구리선을 통하여 전송되며, 이는 먼 거리를 이동하면서 크기가 약해진다. 이러한 현상을 뜻하는 것은?",
+                    options: ["감쇠(Attenuation)", "임피던스(Impedance)", "간섭(Interference)", "진폭(Amplitude)"],
+                    answer: 0
+                },
+                {
+                    question: "100BASE-T라고도 불리는 이더넷의 고속 버전으로서 100 Mbps의 전송속도를 지원하는 근거리통신망의 표준은?",
+                    options: ["Ethernet", "Gigabit Ethernet", "10Giga Ethernet", "Fast Ethernet"],
+                    answer: 3
+                }
+            ],
+            nos: [
+                {
+                    question: "Windows Server 2016에서 DNS서버기능을 설정한 후에 설정이 제대로 되었는지 확인하기 위하여, 명령어 프롬프트에서 도메인을 입력하면 해당 IP주소를 보여주는 명령어는?",
+                    options: ["ls", "nslookup", "show", "pwd"],
+                    answer: 1
+                },
+                {
+                    question: "Linux 디렉터리 구성에 대한 설명으로 옳지 않은 것은?",
+                    options: [
+                        "/tmp - 임시파일이 저장되는 디렉터리",
+                        "/boot - 시스템이 부팅 될 때 부팅 가능한 커널 이미지 파일을 담고 있는 디렉터리",
+                        "/var - 시스템의 로그 파일과 메일이 저장되는 위치",
+                        "/usr - 사용자 계정이 위치하는 파티션 위치"
+                    ],
+                    answer: 3
+                }
+            ],
+            equipment: [
+                {
+                    question: "현재 LAN 카드의 MAC Address는 몇 비트의 번호체계인가?",
+                    options: ["32 비트", "48 비트", "64 비트", "128 비트"],
+                    answer: 1
+                },
+                {
+                    question: "OSI 7계층 중에서 리피터(Repeater)가 지원하는 계층은?",
+                    options: ["물리 계층", "네트워크 계층", "전송 계층", "응용 계층"],
+                    answer: 0
+                },
+                {
+                    question: "전송 매체의 특성 중 Fiber Optics에 해당하는 것은?",
+                    options: [
+                        "여러 라인의 묶음으로 사용하면 간섭 현상을 줄일 수 있다.",
+                        "신호 손실이 적고, 전자기적 간섭이 없다.",
+                        "송수신에 사용되는 구리 핀은 8개 중 4개만 사용한다.",
+                        "수 Km이상 전송 시 Repeater를 반드시 사용해야 한다."
+                    ],
+                    answer: 1
+                }
+            ]
+        };
+
+        let currentQuiz = [];
+        let currentQuestion = 0;
+        let score = 0;
+        let userAnswers = [];
+
+        function showSection(section) {
+            document.getElementById('home-section').style.display = section === 'home' ? 'block' : 'none';
+            document.getElementById('quiz-section').style.display = section === 'quiz' ? 'block' : 'none';
+            document.getElementById('results-section').style.display = section === 'results' ? 'block' : 'none';
+        }
+
+        function startQuiz(category) {
+            currentQuiz = questions[category];
+            currentQuestion = 0;
+            score = 0;
+            userAnswers = new Array(currentQuiz.length).fill(-1);
+            
+            showSection('quiz');
+            displayQuestion();
+            updateProgress();
+            updateScore();
+        }
+
+        function displayQuestion() {
+            if (currentQuestion >= currentQuiz.length) return;
+
+            const question = currentQuiz[currentQuestion];
+            const container = document.getElementById('questionContainer');
+            
+            container.innerHTML = `
+                <div class="question-text">
+                    <strong>문제 ${currentQuestion + 1}.</strong> ${question.question}
+                </div>
+                <div class="options">
+                    ${question.options.map((option, index) => `
+                        <div class="option" onclick="selectOption(${index})" data-index="${index}">
+                            ① ${option}
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            // 이전에 선택한 답안이 있다면 표시
+            if (userAnswers[currentQuestion] !== -1) {
+                const selectedOption = container.querySelector(`[data-index="${userAnswers[currentQuestion]}"]`);
+                if (selectedOption) {
+                    selectedOption.classList.add('selected');
+                }
+            }
+
+            // 버튼 상태 업데이트
+            document.getElementById('prevBtn').disabled = currentQuestion === 0;
+            document.getElementById('nextBtn').style.display = currentQuestion === currentQuiz.length - 1 ? 'none' : 'inline-block';
+            document.getElementById('submitBtn').style.display = currentQuestion === currentQuiz.length - 1 ? 'inline-block' : 'none';
+        }
+
+        function selectOption(index) {
+            // 이전 선택 제거
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            
+            // 새로운 선택 추가
+            document.querySelector(`[data-index="${index}"]`).classList.add('selected');
+            
+            // 답안 저장
+            userAnswers[currentQuestion] = index;
+            updateScore();
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < currentQuiz.length - 1) {
+                currentQuestion++;
+                displayQuestion();
+                updateProgress();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                displayQuestion();
+                updateProgress();
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / currentQuiz.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function updateScore() {
+            const answered = userAnswers.filter(answer => answer !== -1).length;
+            document.getElementById('scoreDisplay').textContent = `진행: ${answered}/${currentQuiz.length}`;
+        }
+
+        function submitQuiz() {
+            // 점수 계산
+            let correctAnswers = 0;
+            for (let i = 0; i < currentQuiz.length; i++) {
+                if (userAnswers[i] === currentQuiz[i].answer) {
+                    correctAnswers++;
+                }
+            }
+            
+            const percentage = Math.round((correctAnswers / currentQuiz.length) * 100);
+            
+            // 결과 표시
+            document.getElementById('finalScore').textContent = percentage + '%';
+            document.getElementById('resultMessage').textContent = 
+                percentage >= 80 ? '훌륭합니다! 합격권입니다!' :
+                percentage >= 60 ? '좋습니다! 조금만 더 노력하세요!' :
+                '더 열심히 공부해주세요!';
+            
+            showSection('results');
+        }
+
+        function restartQuiz() {
+            showSection('home');
+        }
+
+        // 초기화
+        showSection('home');
+    </script>
+</body>
+</html>
